@@ -12,6 +12,9 @@ export default {
       spacing: {
         bigg: "420px",
       },
+      width: {
+        forimage: "240px",
+      },
     },
   },
   plugins: [],
