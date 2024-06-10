@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
+import SearchQuery from "./SearchQuery";
+import Content from "./Content";
 
 function Films() {
   // const location = useLocation();
@@ -15,6 +15,10 @@ function Films() {
   return (
     <div>
       <NavBar />
+      <div className="bg-hole h-screen	">
+        <SearchQuery />
+        <Content />
+      </div>
     </div>
   );
 }

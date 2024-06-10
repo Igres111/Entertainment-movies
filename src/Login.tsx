@@ -10,7 +10,7 @@ function Login() {
 
   function handleChange2(e: React.ChangeEvent<HTMLInputElement>) {
     setUserId((prev) => ({ ...prev, pass: e.target.value }));
-    if (error && userId.pass.length >= 0) {
+    if (error && userId.pass.length > 0) {
       setError((prev) => !prev);
     }
   }
@@ -19,7 +19,7 @@ function Login() {
     localStorage.setItem("pass", userId.pass);
     e.preventDefault();
     if (userId.pass.length === 0) {
-      setError((prev) => !prev);
+      setError(true);
     }
   }
 
