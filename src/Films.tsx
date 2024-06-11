@@ -15,7 +15,7 @@ function Films() {
   return (
     <div>
       <NavBar />
-      <div className="bg-hole h-screen	">
+      <div className="bg-hole	">
         <SearchQuery />
         <Content />
       </div>
