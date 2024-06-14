@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { GlobalAPI } from "./ContextAPI";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
   // const email = localStorage.getItem("email");

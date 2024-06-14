@@ -1,14 +1,53 @@
-import React from "react";
-import data from "../public/data.json";
-function Reccs() {
+import React, { useContext } from "react";
+import { GlobalAPI } from "./ContextAPI";
+function Reccs({ handleClick }) {
+  const { movies } = useContext(GlobalAPI);
   return (
     <div className="text-white ml-4">
-      <h1>Recommended for you</h1>
-      <div className="flex flex-wrap w-full min-w-[340px]  ">
-        {data.slice(5).map((el) => (
-          <div className="flex-grow w-1/2 min-w-[164px]">
-            <img className="rounded-lg " src={el.thumbnail.regular.small} />
-            <div>
+      <h1 className="text-xl mt-6 mb-6">Recommended for you</h1>
+      <div className="flex justify-center items-center flex-wrap w-full min-w-[340px]  ">
+        {movies.slice(5).map((el, index) => (
+          <div
+            className="flex-grow w-1/2 min-w-[164px]"
+            key={Math.random() * 1000}
+          >
+            <div className="relative ">
+              <img
+                className="rounded-lg w-[164px]"
+                src={el.thumbnail.regular.small}
+              />
+              <button
+                onClick={() => handleClick(index + 5)}
+                className="w-8 h-8 flex justify-center items-center bg-hole opacity-50 absolute top-0 rounded-full ml-[124px] mt-2"
+              >
+                {el.isBookmarked ? (
+                  <svg
+                    width="12"
+                    height="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10.61 0c.14 0 .273.028.4.083a1.03 1.03 0 0 1 .657.953v11.928a1.03 1.03 0 0 1-.656.953c-.116.05-.25.074-.402.074-.291 0-.543-.099-.756-.296L5.833 9.77l-4.02 3.924c-.218.203-.47.305-.756.305a.995.995 0 0 1-.4-.083A1.03 1.03 0 0 1 0 12.964V1.036A1.03 1.03 0 0 1 .656.083.995.995 0 0 1 1.057 0h9.552Z"
+                      fill="#FFF"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    width="12"
+                    height="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m10.518.75.399 12.214-5.084-4.24-4.535 4.426L.75 1.036l9.768-.285Z"
+                      stroke="#FFF"
+                      strokeWidth="1.5"
+                      fill="none"
+                    />
+                  </svg>
+                )}
+              </button>
+            </div>
+            <div className="flex items-center gap-1 text-xs mt-2 opacity-75	">
               <span>{el.year}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -36,6 +75,7 @@ function Reccs() {
                   />
                 </svg>
               )}
+              <span>{el.category}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="2"
@@ -47,7 +87,7 @@ function Reccs() {
               </svg>
               <span>{el.rating}</span>
             </div>
-            <h1>{el.title}</h1>
+            <h1 className="text-sm mb-4">{el.title}</h1>
           </div>
         ))}
       </div>

@@ -1,16 +1,30 @@
-import React from "react";
-import data from "../public/data.json";
+import { useContext } from "react";
 import Reccs from "./Reccs";
+import { GlobalAPI } from "./ContextAPI";
 
 function Content() {
+  const { movies, setMovies } = useContext(GlobalAPI);
+  function handleClick(index: number) {
+    setMovies((prev) =>
+      prev.map((el, ind) => {
+        return ind === index
+          ? { ...el, isBookmarked: !el.isBookmarked }
+          : { ...el };
+      })
+    );
+  }
+
   return (
     <div>
-      <h1 className="text-white ml-4 mt-10 text-[20px]">Trending</h1>
-      <div className="  flex  gap-2 ml-4 overflow-hidden	 ">
-        {data.map(
-          (el: TDataItem) =>
+      <h1 className="text-white ml-4 mt-6 text-[20px]">Trending</h1>
+      <div className="flex gap-2 ml-4 overflow-hidden	">
+        {movies.map(
+          (el: TDataItem, index: number) =>
             el.isTrending && (
-              <div className="min-w-[240px] text-white  ">
+              <div
+                key={Math.random() * 1000}
+                className="min-w-[240px] text-white  "
+              >
                 <div className="relative">
                   <img
                     className="rounded-lg"
@@ -78,21 +92,38 @@ function Content() {
                     </svg>
                     <span>{el.rating}</span>
                   </div>
-                  <button className="flex w-8 h-8 absolute top-0 ml-[200px] justify-center items-center rounded-full bg-hole mt-2 ">
-                    <svg
-                      width="12"
-                      height="14"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="m10.518.75.399 12.214-5.084-4.24-4.535 4.426L.75 1.036l9.768-.285Z"
-                        stroke="#FFF"
-                        stroke-width="1.5"
-                        fill="none"
-                      />
-                    </svg>
+
+                  <button
+                    onClick={() => handleClick(index)}
+                    className="flex w-8 h-8 absolute top-0 ml-[200px] justify-center items-center rounded-full bg-hole mt-2 opacity-50 "
+                  >
+                    {el.isBookmarked ? (
+                      <svg
+                        width="12"
+                        height="14"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M10.61 0c.14 0 .273.028.4.083a1.03 1.03 0 0 1 .657.953v11.928a1.03 1.03 0 0 1-.656.953c-.116.05-.25.074-.402.074-.291 0-.543-.099-.756-.296L5.833 9.77l-4.02 3.924c-.218.203-.47.305-.756.305a.995.995 0 0 1-.4-.083A1.03 1.03 0 0 1 0 12.964V1.036A1.03 1.03 0 0 1 .656.083.995.995 0 0 1 1.057 0h9.552Z"
+                          fill="#FFF"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        width="12"
+                        height="14"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m10.518.75.399 12.214-5.084-4.24-4.535 4.426L.75 1.036l9.768-.285Z"
+                          stroke="#FFF"
+                          strokeWidth="1.5"
+                          fill="none"
+                        />
+                      </svg>
+                    )}
                   </button>
-                  <h1 className="text-[15px] absolute bottom-0 ml-4 mb-4">
+                  <h1 className="text-[15px] absolute bottom-0 ml-4 mb-4 	">
                     {el.title}
                   </h1>
                 </div>
@@ -100,10 +131,9 @@ function Content() {
             )
         )}
       </div>
-      <Reccs />
+      <Reccs handleClick={handleClick} />
     </div>
   );
 }
 
 export default Content;
-// flex justify-around w-screen gap-2 ml-4
