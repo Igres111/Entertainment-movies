@@ -15,8 +15,8 @@ function Content() {
   }
 
   return (
-    <div>
-      <h1 className="text-white ml-4 mt-6 text-[20px]">Trending</h1>
+    <div className="bg-hole">
+      <h1 className="text-white ml-4 pt-6 text-[20px] ">Trending</h1>
       <div className="flex gap-2 ml-4 overflow-hidden	">
         {movies.map(
           (el: TDataItem, index: number) =>
@@ -95,7 +95,7 @@ function Content() {
 
                   <button
                     onClick={() => handleClick(index)}
-                    className="flex w-8 h-8 absolute top-0 ml-[200px] justify-center items-center rounded-full bg-hole mt-2 opacity-50 "
+                    className="flex w-8 h-8 absolute top-0 ml-[200px] justify-center items-center rounded-full bg-hole/50 mt-2  "
                   >
                     {el.isBookmarked ? (
                       <svg

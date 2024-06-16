@@ -1,16 +1,20 @@
 import React, { useContext } from "react";
 import { GlobalAPI } from "./ContextAPI";
-function Reccs({ handleClick }) {
+
+type HandleClickType = (index: number) => void;
+
+type ReccsProps = {
+  handleClick: HandleClickType;
+};
+
+function Reccs({ handleClick }: ReccsProps) {
   const { movies } = useContext(GlobalAPI);
   return (
     <div className="text-white ml-4">
       <h1 className="text-xl mt-6 mb-6">Recommended for you</h1>
       <div className="flex justify-center items-center flex-wrap w-full min-w-[340px]  ">
         {movies.slice(5).map((el, index) => (
-          <div
-            className="flex-grow w-1/2 min-w-[164px]"
-            key={Math.random() * 1000}
-          >
+          <div className="flex-grow w-1/2" key={Math.random() * 1000}>
             <div className="relative ">
               <img
                 className="rounded-lg w-[164px]"

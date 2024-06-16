@@ -1,9 +1,15 @@
 import React, { useContext, useState } from "react";
 import { GlobalAPI } from "./ContextAPI";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const { userId, setUserId } = useContext(GlobalAPI);
   const [error, setError] = useState(false);
+
+  const savedMail = localStorage.getItem("email");
+  const savedPass = localStorage.getItem("pass");
+  const navigate = useNavigate();
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setUserId((prev) => ({ ...prev, email: e.target.value }));
   }
@@ -15,11 +21,12 @@ function Login() {
     }
   }
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    localStorage.setItem("email", userId.email);
-    localStorage.setItem("pass", userId.pass);
     e.preventDefault();
     if (userId.pass.length === 0) {
       setError(true);
+    }
+    if (savedMail === userId.email && savedPass === userId.pass) {
+      navigate("/");
     }
   }
 

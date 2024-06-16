@@ -1,21 +1,13 @@
-import NavBar from "./NavBar";
-import SearchQuery from "./SearchQuery";
 import Content from "./Content";
-import { useState } from "react";
+import { useContext } from "react";
+import Searched from "./Searched";
+import { GlobalAPI } from "./ContextAPI";
 
 function Films() {
-  // const location = useLocation();
-  // const navigate = useNavigate();
-  // console.log(location);
-  // useEffect(() => {
-  //   if (location.pathname === "/") {
-  //     navigate("/login");
-  //   }
-  // }, []);
-
+  const { search } = useContext(GlobalAPI);
   return (
-    <div className="bg-hole">
-      <Content />
+    <div className="bg-hole  lg:pl-40 min-h-screen ">
+      {search.length === 0 ? <Content /> : <Searched />}
     </div>
   );
 }
