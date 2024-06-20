@@ -8,6 +8,7 @@ export default {
         bluehole: "#161D2F",
         greyblue: "#5A698F",
         monkired: "#FC4747",
+       
       },
       spacing: {
         bigg: "420px",

@@ -1,27 +1,48 @@
-import React, { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalAPI } from "./ContextAPI";
 import Searched from "./Searched";
+import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
-function Tvshow(props) {
+function Tvshow() {
   const { movies, handleClickMark, search } = useContext(GlobalAPI);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("email") || !localStorage.getItem("pass")) {
+      navigate("/login");
+    }
+  }, []);
+  const isExtraLargeDevice = useMediaQuery(
+    "only screen and (min-width : 1201px)"
+  );
   return (
     <>
       {search.length === 0 ? (
-        <div className="pl-4 text-white flex flex-wrap bg-hole">
-          <h1 className="  text-xl h-[25px] mt-[26px] mb-6	">TV Series</h1>
-          <div className="flex justify-center items-center flex-wrap w-full min-w-[340px]  ">
+        <div className="pl-4 text-white flex flex-wrap bg-hole lg:pl-40">
+          <h1 className="  text-xl h-[25px] mt-[26px] mb-6 lg:text-[32px]">
+            TV Series
+          </h1>
+          <div className="flex  items-center flex-wrap  min-w-[340px] gap-5 ">
             {movies.map(
               (el) =>
                 el.category === "TV Series" && (
-                  <div className="flex-grow w-1/2" key={Math.random() * 1000}>
+                  <div
+                    className="flex-grow w-[46%] lg:max-w-[23%]"
+                    key={Math.random() * 1000}
+                  >
                     <div className="relative ">
                       <img
-                        className="rounded-lg w-[164px]"
-                        src={el.thumbnail.regular.small}
+                        className="rounded-lg w-[164px] lg:w-auto"
+                        src={
+                          isExtraLargeDevice
+                            ? el.thumbnail.regular.large
+                            : el.thumbnail.regular.small
+                        }
                       />
                       <button
                         onClick={() => handleClickMark(el)}
-                        className="w-8 h-8 flex justify-center items-center bg-hole opacity-50 absolute top-0 rounded-full ml-[124px] mt-2"
+                        className="w-8 h-8 flex justify-center items-center bg-hole/50 opacity-50 absolute top-0 lg:ml-auto lg:right-6 rounded-full ml-[124px] mt-2 hover:bg-white/50  hover:text-black"
                       >
                         {el.isBookmarked ? (
                           <svg
@@ -42,7 +63,7 @@ function Tvshow(props) {
                           >
                             <path
                               d="m10.518.75.399 12.214-5.084-4.24-4.535 4.426L.75 1.036l9.768-.285Z"
-                              stroke="#FFF"
+                              stroke="currentColor"
                               strokeWidth="1.5"
                               fill="none"
                             />
@@ -50,7 +71,7 @@ function Tvshow(props) {
                         )}
                       </button>
                     </div>
-                    <div className="flex items-center gap-1 text-xs mt-2 opacity-75	">
+                    <div className="flex items-center gap-1 text-xs mt-2 opacity-75	lg:text-[13px]">
                       <span>{el.year}</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +119,7 @@ function Tvshow(props) {
                       </svg>
                       <span>{el.rating}</span>
                     </div>
-                    <h1 className="text-sm mb-4">{el.title}</h1>
+                    <h1 className="text-sm mb-4 lg:text-lg">{el.title}</h1>
                   </div>
                 )
             )}

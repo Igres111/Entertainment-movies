@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { GlobalAPI } from "./ContextAPI";
-
+import { useMediaQuery } from "@uidotdev/usehooks";
 type HandleClickType = (index: number) => void;
 
 type ReccsProps = {
@@ -9,20 +9,31 @@ type ReccsProps = {
 
 function Reccs({ handleClick }: ReccsProps) {
   const { movies } = useContext(GlobalAPI);
+
+  const isExtraLargeDevice = useMediaQuery(
+    "only screen and (min-width : 1201px)"
+  );
   return (
     <div className="text-white ml-4">
-      <h1 className="text-xl mt-6 mb-6">Recommended for you</h1>
-      <div className="flex justify-center items-center flex-wrap w-full min-w-[340px]  ">
+      <h1 className="text-xl mt-6 mb-6 lg:text-[32px] ">Recommended for you</h1>
+      <div className="flex justify-center items-center flex-wrap w-full min-w-[340px]    ">
         {movies.slice(5).map((el, index) => (
-          <div className="flex-grow w-1/2" key={Math.random() * 1000}>
-            <div className="relative ">
+          <div
+            className="flex-grow w-1/2 lg:w-auto "
+            key={Math.random() * 1000}
+          >
+            <div className="relative  ">
               <img
-                className="rounded-lg w-[164px]"
-                src={el.thumbnail.regular.small}
+                className="rounded-lg w-[164px] lg:w-[280px]"
+                src={
+                  isExtraLargeDevice
+                    ? el.thumbnail.regular.large
+                    : el.thumbnail.regular.small
+                }
               />
               <button
                 onClick={() => handleClick(index + 5)}
-                className="w-8 h-8 flex justify-center items-center bg-hole opacity-50 absolute top-0 rounded-full ml-[124px] mt-2"
+                className="w-8 h-8 flex justify-center items-center bg-hole opacity-50 absolute top-0 rounded-full ml-[124px] lg:ml-[232px] mt-2 hover:bg-white/50  hover:text-black"
               >
                 {el.isBookmarked ? (
                   <svg
@@ -43,7 +54,7 @@ function Reccs({ handleClick }: ReccsProps) {
                   >
                     <path
                       d="m10.518.75.399 12.214-5.084-4.24-4.535 4.426L.75 1.036l9.768-.285Z"
-                      stroke="#FFF"
+                      stroke="currentColor"
                       strokeWidth="1.5"
                       fill="none"
                     />
@@ -51,7 +62,7 @@ function Reccs({ handleClick }: ReccsProps) {
                 )}
               </button>
             </div>
-            <div className="flex items-center gap-1 text-xs mt-2 opacity-75	">
+            <div className="flex items-center gap-1 text-xs mt-2 opacity-75 lg:text-[13px]	">
               <span>{el.year}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +102,7 @@ function Reccs({ handleClick }: ReccsProps) {
               </svg>
               <span>{el.rating}</span>
             </div>
-            <h1 className="text-sm mb-4">{el.title}</h1>
+            <h1 className="text-sm mb-4 lg:text-lg">{el.title}</h1>
           </div>
         ))}
       </div>

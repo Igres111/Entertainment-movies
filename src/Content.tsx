@@ -1,9 +1,19 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Reccs from "./Reccs";
 import { GlobalAPI } from "./ContextAPI";
+import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 function Content() {
   const { movies, setMovies } = useContext(GlobalAPI);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("email") || !localStorage.getItem("pass")) {
+      navigate("/login");
+    }
+  }, []);
+
   function handleClick(index: number) {
     setMovies((prev) =>
       prev.map((el, ind) => {
@@ -13,7 +23,9 @@ function Content() {
       })
     );
   }
-
+  const isExtraLargeDevice = useMediaQuery(
+    "only screen and (min-width : 1201px)"
+  );
   return (
     <div className="bg-hole">
       <h1 className="text-white ml-4 pt-6 text-[20px] ">Trending</h1>
@@ -23,14 +35,18 @@ function Content() {
             el.isTrending && (
               <div
                 key={Math.random() * 1000}
-                className="min-w-[240px] text-white  "
+                className="min-w-[240px] text-white lg:min-w-[470px]  lg:text-base "
               >
                 <div className="relative">
                   <img
                     className="rounded-lg"
-                    src={el.thumbnail.trending?.small}
+                    src={
+                      isExtraLargeDevice
+                        ? el.thumbnail.trending?.large
+                        : el.thumbnail.trending?.small
+                    }
                   />
-                  <div className=" absolute flex items-center top-0 mt-[86px] ml-4 gap-1 text-[12px] ">
+                  <div className=" absolute flex items-center top-0 mt-[86px] ml-4 gap-1 text-[12px] lg:mt-[154px] lg:ml-6">
                     <span>{el.year}</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +111,7 @@ function Content() {
 
                   <button
                     onClick={() => handleClick(index)}
-                    className="flex w-8 h-8 absolute top-0 ml-[200px] justify-center items-center rounded-full bg-hole/50 mt-2  "
+                    className="flex w-8 h-8 absolute top-0 ml-[200px] lg:ml-[414px] justify-center items-center rounded-full bg-hole/50  mt-2 hover:bg-white/50  hover:text-black  "
                   >
                     {el.isBookmarked ? (
                       <svg
@@ -116,14 +132,14 @@ function Content() {
                       >
                         <path
                           d="m10.518.75.399 12.214-5.084-4.24-4.535 4.426L.75 1.036l9.768-.285Z"
-                          stroke="#FFF"
+                          stroke="currentColor"
                           strokeWidth="1.5"
                           fill="none"
                         />
                       </svg>
                     )}
                   </button>
-                  <h1 className="text-[15px] absolute bottom-0 ml-4 mb-4 	">
+                  <h1 className="text-[15px] absolute bottom-0 ml-4 mb-4 lg:text-2xl lg:mb-6 lg:ml-6	">
                     {el.title}
                   </h1>
                 </div>

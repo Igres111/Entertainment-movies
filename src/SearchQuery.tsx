@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { GlobalAPI } from "./ContextAPI";
 
 function SearchQuery() {
-  const { movies, setBox, search, setSearch } = useContext(GlobalAPI);
+  const { setSearch } = useContext(GlobalAPI);
 
   function handleType(e: React.ChangeEvent<HTMLInputElement>) {
     setSearch(e.target.value);

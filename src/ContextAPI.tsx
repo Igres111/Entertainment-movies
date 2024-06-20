@@ -14,11 +14,9 @@ type TApi = {
   >;
   movies: TDataItem[];
   setMovies: React.Dispatch<React.SetStateAction<TDataItem[]>>;
-  box: TDataItem[];
-  setBox: React.Dispatch<React.SetStateAction<TDataItem[]>>;
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
-  handleClickMark: (el: any) => void;
+  handleClickMark: (el: TDataItem) => void;
 };
 
 export const GlobalAPI = createContext<TApi>({
@@ -26,20 +24,17 @@ export const GlobalAPI = createContext<TApi>({
   setUserId: () => {},
   movies: [],
   setMovies: () => {},
-  box: [],
-  setBox: () => {},
   search: "",
   setSearch: () => {},
-  handleClickMark: (el) => {},
+  handleClickMark: () => {},
 });
 
 function ContextAPI() {
   const [userId, setUserId] = useState({ email: "", pass: "" });
   const [movies, setMovies] = useState<TDataItem[]>(data);
-  const [box, setBox] = useState<TDataItem[]>([]);
   const [search, setSearch] = useState<string>("");
 
-  function handleClickMark(el) {
+  function handleClickMark(el: TDataItem) {
     setMovies((prev) =>
       prev.map((element) => {
         if (element.title === el.title) {
@@ -50,9 +45,6 @@ function ContextAPI() {
       })
     );
   }
-  // return { ...el, isBookmarked: !el.isBookmarked };
-  // return { ...el };
-  console.log(movies);
   return (
     <>
       <GlobalAPI.Provider
@@ -61,8 +53,6 @@ function ContextAPI() {
           setUserId,
           movies,
           setMovies,
-          box,
-          setBox,
           search,
           setSearch,
           handleClickMark,
