@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { GlobalAPI } from "./ContextAPI";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
   // const email = localStorage.getItem("email");
@@ -109,9 +109,9 @@ function SignUp() {
 
           <div className="mt-6 flex justify-center">
             <label className="text-white">Already have an account?</label>
-            <a href="./login" className="text-monkired ml-2 ">
+            <Link to="/login" className="text-monkired ml-2 ">
               Login
-            </a>
+            </Link>
           </div>
         </div>
       </form>

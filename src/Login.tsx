@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { GlobalAPI } from "./ContextAPI";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const { userId, setUserId } = useContext(GlobalAPI);
@@ -79,9 +79,9 @@ function Login() {
           </button>
           <div className="mt-10 flex justify-center">
             <label className="text-white">Don't have an account?</label>
-            <a href="./signup" className="text-monkired ml-2 ">
+            <Link to="/signup" className="text-monkired ml-2 ">
               Sign Up
-            </a>
+            </Link>
           </div>
         </div>
       </form>
