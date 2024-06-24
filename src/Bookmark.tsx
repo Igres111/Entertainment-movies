@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@uidotdev/usehooks";
 
 function Bookmark() {
-  const { movies, search } = useContext(GlobalAPI);
+  const { movies, handleClickMark, search } = useContext(GlobalAPI);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +42,10 @@ function Bookmark() {
                             : el.thumbnail.regular.small
                         }
                       />
-                      <button className="w-8 h-8 flex justify-center items-center bg-hole/50  absolute top-0 rounded-full ml-[124px] lg:right-6 lg:mt-4 mt-2 hover:bg-white/50  hover:text-black">
+                      <button
+                        onClick={() => handleClickMark(el)}
+                        className="w-8 h-8 flex justify-center items-center bg-hole/50  absolute top-0 rounded-full ml-[124px] lg:right-6 lg:mt-4 mt-2 hover:bg-white/50  hover:text-black"
+                      >
                         {el.isBookmarked ? (
                           <svg
                             width="12"
@@ -143,7 +146,10 @@ function Bookmark() {
                             : el.thumbnail.regular.small
                         }
                       />
-                      <button className="w-8 h-8 flex justify-center items-center bg-hole opacity-50 absolute top-0 rounded-full ml-[124px] lg:right-6 lg:mt-4  mt-2 hover:bg-white/50  hover:text-black">
+                      <button
+                        onClick={() => handleClickMark(el)}
+                        className="w-8 h-8 flex justify-center items-center bg-hole opacity-50 absolute top-0 rounded-full ml-[124px] lg:right-6 lg:mt-4  mt-2 hover:bg-white/50  hover:text-black"
+                      >
                         {el.isBookmarked ? (
                           <svg
                             width="12"
